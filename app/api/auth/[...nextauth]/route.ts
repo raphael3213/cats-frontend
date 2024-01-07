@@ -4,6 +4,11 @@ import NextAuth from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const getRefreshToken = (refreshToken: string) => {
+  return axios.put("http://localhost:3000/auth/refresh", {
+    refreshToken,
+  });
+};
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -42,10 +47,20 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user, account }) {
       console.log(token, user, account);
-      return token;
+      if (user) {
+        return { ...token, ...user };
+      } else if (Date.now() / 1000 < token.expiresIn) {
+        const data = await getRefreshToken(token.refreshToken);
+        return { ...token, ...data };
+      } else {
+        return token;
+      }
     },
 
     async session({ session, token }) {
+      session.user = token.user;
+      session.refreshToken = token.refreshToken;
+      session.accessToken = token.accessToken;
       return session;
     },
   },

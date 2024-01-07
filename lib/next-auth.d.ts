@@ -11,8 +11,12 @@ declare module "next-auth" {
 
     refreshToken: string;
   }
+}
 
-  interface Token {
+import { JWT } from "next-auth/jwt";
+
+declare module "next-auth/jwt" {
+  interface JWT {
     user: {
       ksuid: string;
       email: string;
@@ -21,5 +25,7 @@ declare module "next-auth" {
     accessToken: string;
 
     refreshToken: string;
+
+    expiresIn: integer;
   }
 }
