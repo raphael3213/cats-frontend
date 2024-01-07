@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} px-36`}>
-        <div>
-          <Navbar />
-          <AntdRegistry>{children}</AntdRegistry>
-        </div>
+        <Providers>
+          <div>
+            <Navbar />
+            <AntdRegistry>{children}</AntdRegistry>
+          </div>
+        </Providers>
       </body>
     </html>
   );

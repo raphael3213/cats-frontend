@@ -1,7 +1,10 @@
+"use client";
 import { navLinks } from "@/constants";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 function Navbar() {
+  const { data: session } = useSession();
   return (
     <div className="w-full h-16 bg-black text-white flex justify-between p-4 shadow-lg">
       <div className="flex gap-5">
@@ -11,7 +14,7 @@ function Navbar() {
           </a>
         ))}
       </div>
-      <div>User Info</div>
+      {session?.user.email && <div>User Info</div>}
     </div>
   );
 }
