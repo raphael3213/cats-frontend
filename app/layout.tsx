@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Providers } from "@/components/Providers";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Providers>
           <div>
             <Navbar />
+            <Toaster position="top-right" />
             <AntdRegistry>{children}</AntdRegistry>
           </div>
         </Providers>
