@@ -3,6 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
+import { signIn } from "next-auth/react";
 
 const getRefreshToken = (refreshToken: string, cookie: string[]) => {
   return axios.put(
@@ -29,8 +30,8 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "password", type: "password" },
       },
+
       async authorize(credentials, req) {
-        console.log("MOOMOMOMMOMMOMO");
         try {
           if (!credentials?.email || !credentials.password) return null;
           const { email, password } = credentials;
@@ -68,6 +69,9 @@ export const authOptions: NextAuthOptions = {
       session.accessToken = token.accessToken;
       return session;
     },
+  },
+  pages: {
+    signIn: "/sign-in",
   },
 };
 
