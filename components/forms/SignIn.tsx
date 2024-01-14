@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, Button, Input } from "antd";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import {
   FieldError,
@@ -25,6 +26,7 @@ type FormDataErrorType = FieldErrors<{
 }>;
 
 function SignIn() {
+  const router = useRouter();
   const {
     handleSubmit,
     formState: { errors },
@@ -40,9 +42,12 @@ function SignIn() {
         redirect: false, // Change to `true` to redirect after successful login
       });
       console.log(data);
+
       if (data?.error) {
         toast.error(data.error);
         return;
+      } else {
+        router.push("cats");
       }
     } catch (e) {
       if (e instanceof Error) {

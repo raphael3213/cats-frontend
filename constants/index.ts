@@ -5,6 +5,6 @@ export const navLinks = [
   },
   {
     name: "My cats",
-    link: "/",
+    link: "/cats",
   },
 ];

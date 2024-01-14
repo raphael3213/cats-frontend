@@ -18,7 +18,7 @@ async function Navbar() {
           </a>
         ))}
       </div>
-      {session?.user.email && <div>User Info</div>}
+      {session?.user.email && <div>Hi, {session.user.email}</div>}
     </div>
   );
 }

@@ -6,16 +6,22 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { signIn } from "next-auth/react";
 
 const getRefreshToken = (refreshToken: string, cookie: string[]) => {
-  return axios.put(
-    "http://localhost:3000/auth/refresh",
-    {},
-    {
-      withCredentials: true,
-      headers: {
-        Cookie: cookie,
-      },
+  try {
+    return axios.put(
+      "http://localhost:3000/auth/refresh",
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          Cookie: cookie,
+        },
+      }
+    );
+  } catch (e) {
+    if (e instanceof Error) {
+      console.log(e);
     }
-  );
+  }
 };
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -57,7 +63,7 @@ export const authOptions: NextAuthOptions = {
         return { ...token, ...user };
       } else if (Date.now() / 1000 > token.expiresIn) {
         const data = await getRefreshToken(token.refreshToken, token.cookie);
-        return { ...token, ...data.data };
+        return { ...token, ...data?.data };
       } else {
         return token;
       }

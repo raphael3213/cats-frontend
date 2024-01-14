@@ -20,10 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} px-36`}>
+      <body className={`${inter.className}`}>
         <Providers>
+          <Navbar />
           <div className="min-h-screen justify-center items-center flex">
-            <Navbar />
             <Toaster position="top-right" />
             <AntdRegistry>{children}</AntdRegistry>
           </div>
